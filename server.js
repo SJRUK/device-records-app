@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv');
 dotenv.config();
 const url = process.env.MONGO_URI;
-let db;
+
 
 
   

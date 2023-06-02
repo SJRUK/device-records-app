@@ -1,27 +1,34 @@
 <!DOCTYPE html><html lang="en">
     <head>  <meta charset="UTF-8">  
-    <title>MY APP</title></head>
-    <body>  May Node and Express be with you.   
+    <title>TM470 - Device Records App</title></head>
+    <body>   
+
+        <h1>Device Records Database</h1>
 
         <form action="/quotes" method="POST">  
-            <input type="text" placeholder="name" name="name">  
-            <input type="text" placeholder="quote" name="quote">  
+            <input type="text" placeholder="Asset number" name="Asset number">  
+            <input type="text" placeholder="Name" name="Name">  
+            <input type="text" placeholder="Organisation" name="Organisation">  
+            <input type="text" placeholder="Line manager" name="Line manager"> 
+            <label for="Date required">Date required: </label>
+            <input type="date" > 
             <button type="submit">Submit</button>
         </form>
         
-        <h2>Quotes</h2>
+        <h2>Devices currently held in safe</h2>
 
-<ul class="quotes">
-  <!-- Loop through quotes -->
-  <% for(var i = 0; i < quotes.length; i++) {%>
-  <li class="quote">
-    <!-- Output name from the iterated quote object -->
-    <span><%= quotes[i].name %></span>:
-    <!-- Output quote from the iterated quote object -->
-    <span><%= quotes[i].quote %></span>
-  </li>
-  <% } %>
-</ul>
+        <ul class="quotes">
+        <!-- Loop through quotes -->
+        <% for(var i = 0; i < quotes.length; i++) {%>
+        <li class="quote">
+          <span><%= quotes[i].assetTag %></span>:
+          <!-- Output name from the iterated quote object -->
+          <span><%= quotes[i].name %></span>:
+          <!-- Output quote from the iterated quote object -->
+          <span><%= quotes[i].quote %></span>
+          </li>
+          <% } %>
+        </ul>
 
 <div>
     <h2>Darth Vader invades!</h2>
