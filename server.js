@@ -25,23 +25,36 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     app.use(express.static('public'))
     app.use(bodyParser.json())
     
-    app.post('/quotes', (req, res) => {
+    /*Add new entry to database*/
+    app.post('/devices', (req, res) => {
         devicesCollection.insertOne(req.body)
           .then(result => {
             res.redirect('/')
-            console.log(result)
+            console.log(req.body)
           })
           .catch(error => console.error(error))
     })
-   app.get('/', (req, res) => {
+
+    /*Display all database entries*/
+    app.get('/', (req, res) => {
       devicesCollection.find().toArray()
         .then(results => {
-          res.render('index.ejs', { quotes: results })
+          res.render('index.ejs', { devices: results })
         })
         .catch(error => console.error(error))
       })
+
+      /*app.get('/', (req, res) => {
+        devicesCollection.find({name:"Mickey Mouse"}).toArray() 
+          .then(results => {
+            res.render('index.ejs', { devices: results })
+          })
+          .catch(error => console.error(error))
+        })*/
+
     
-      app.put('/quotes', (req, res) => {
+         /*Replace an entry with a new one*/  
+        app.put('/quotes', (req, res) => {
         devicesCollection.findOneAndUpdate
         (
           { name: 'Yoda' },
@@ -61,6 +74,7 @@ MongoClient.connect(url, { useUnifiedTopology: true })
           .catch(error => console.error(error))
       })
 
+      /*Delete an entry*/
       app.delete('/quotes', (req, res) => {
         devicesCollection
           .deleteOne({ name: req.body.name })

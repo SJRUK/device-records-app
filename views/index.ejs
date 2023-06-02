@@ -5,33 +5,39 @@
 
         <h1>Device Records Database</h1>
 
-        <form action="/quotes" method="POST">  
-            <input type="text" placeholder="Asset number" name="Asset number">  
-            <input type="text" placeholder="Name" name="Name">  
-            <input type="text" placeholder="Organisation" name="Organisation">  
-            <input type="text" placeholder="Line manager" name="Line manager"> 
+        <h2>Add device</h2>
+        <form action="/devices" method="POST">  
+            <input type="text" placeholder="Asset number" name="assetTag">  
+            <input type="text" placeholder="Name" name="name">  
+            <input type="text" placeholder="Organisation" name="organisation">  
+            <input type="text" placeholder="Line manager" name="lineManager"> 
             <label for="Date required">Date required: </label>
-            <input type="date" > 
+            <input type="date" name="dateRequired"> 
             <button type="submit">Submit</button>
         </form>
         
         <h2>Devices currently held in safe</h2>
 
-        <ul class="quotes">
-        <!-- Loop through quotes -->
-        <% for(var i = 0; i < quotes.length; i++) {%>
-        <li class="quote">
-          <span><%= quotes[i].assetTag %></span>:
+        <ul class="devices">
+        <!-- Loop through devices -->
+        <% for(var i = 0; i < devices.length; i++) {%>
+        <li class="device">
+          <!-- Output assetTag from the iterated quote object -->
+          <span><%= devices[i].assetTag %></span>:
           <!-- Output name from the iterated quote object -->
-          <span><%= quotes[i].name %></span>:
-          <!-- Output quote from the iterated quote object -->
-          <span><%= quotes[i].quote %></span>
+          <span><%= devices[i].name %></span>:
+          <!-- Output organisation from the iterated quote object -->
+          <span><%= devices[i].organisation %></span>:
+          <!-- Output line manager from the iterated quote object -->
+          <span><%= devices[i].lineManager %></span>:
+          <!-- Output date from the iterated quote object -->
+          <span><%= devices[i].dateRequired %></span>
           </li>
           <% } %>
         </ul>
 
 <div>
-    <h2>Darth Vader invades!</h2>
+    <h2>Search Devices</h2>
     <p>Replace first Yoda's quote with a quote written by Darth Vader</p>
     <button id="update-button">Replace Yoda's quote</button>
   </div>
