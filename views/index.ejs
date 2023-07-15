@@ -5,6 +5,10 @@
 
         <h1>Device Records Database</h1>
 
+        <button onclick="document.location='/deviceList.ejs'">View devices</button>
+        <button onclick="document.location='/search.ejs'">Search devices</button>
+        <button onclick="document.location='/deviceList.ejs'">Add devices</button>
+
         <h2>Add device</h2>
         <form action="/devices" method="POST">  
             <input type="text" placeholder="Asset number" name="assetTag">  
@@ -16,43 +20,35 @@
             <button type="submit">Submit</button>
         </form>
         
-        <h2>Devices currently held in safe</h2>
-
-        <ul class="devices">
-        <!-- Loop through devices -->
-        <% for(var i = 0; i < devices.length; i++) {%>
-        <li class="device">
-          <!-- Output assetTag from the iterated quote object -->
-          <span><%= devices[i].assetTag %></span>:
-          <!-- Output name from the iterated quote object -->
-          <span><%= devices[i].name %></span>:
-          <!-- Output organisation from the iterated quote object -->
-          <span><%= devices[i].organisation %></span>:
-          <!-- Output line manager from the iterated quote object -->
-          <span><%= devices[i].lineManager %></span>:
-          <!-- Output date from the iterated quote object -->
-          <span><%= devices[i].dateRequired %></span>
-          </li>
-          <% } %>
-        </ul>
+        
 
 <div>
     <h2>Search Devices</h2>
-    <p>Replace first Yoda's quote with a quote written by Darth Vader</p>
-    <button id="update-button">Replace Yoda's quote</button>
-  </div>
-  
+      
+
 
   <div>
-    <h2>Remove Darth Vader!</h2>
+    <h2>Remove Device</h2>
     <p>
-      Delete one Darth Vader's quote. Does nothing if there are no more Darth
-      Vader's quote
+      Delete a database entry
     </p>
-    <button id="delete-button">Delete Darth Vader's quote</button>
+    <input type="text" placeholder="Asset Number" id="deleteInput">  
+    <button id="delete-button">Delete</button>
   </div>
 
   <div id="message"></div>
+
+  
+  <h2>Update existing entry</h2>
+  <form id="updateForm">
+    <input type="text" id="assetInput" placeholder="Asset Number">  
+    <input type="text" id="nameInput" placeholder="Enter name">
+    <input type="text" id="organisationInput" placeholder="Organisation">  
+    <input type="text" id="lineManagerInput" placeholder="Line manager" > 
+    <label for="Date required">Date required: </label>
+    <input type="date" id="dateInput"> 
+        <button type="submit" id="submitButton">Submit</button>
+  </form>
   
     </body>
 

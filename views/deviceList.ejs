@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="en">
+    <head>  <meta charset="UTF-8">  
+    <title>TM470 - Device Records App</title></head>
+    
+    <h2>Devices currently held in safe</h2>
+
+        <ul class="devices">
+        <!-- Loop through devices -->
+        <% for(var i = 0; i < devices.length; i++) {%>
+        <li class="device">
+          <!-- Output assetTag from the iterated device object -->
+          <span><%= devices[i].assetTag %></span>:
+          <!-- Output name from the iterated device object -->
+          <span><%= devices[i].name %></span>:
+          <!-- Output organisation from the iterated device object -->
+          <span><%= devices[i].organisation %></span>:
+          <!-- Output line manager from the iterated device object -->
+          <span><%= devices[i].lineManager %></span>:
+          <!-- Output date from the iterated device object -->
+          <span><%= devices[i].dateRequired %></span>
+          </li>
+          <% } %>
+        </ul>

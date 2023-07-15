@@ -8,10 +8,7 @@ dotenv.config();
 const url = process.env.MONGO_URI;
 
 
-
-  
-
-  app.listen(3000, function() {  console.log('listening on 3000')})
+  app.listen(3000, function() { console.log('listening on 3000')})
   app.use(bodyParser.urlencoded({extended: true}))
 
 MongoClient.connect(url, { useUnifiedTopology: true })
@@ -25,7 +22,17 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     app.use(express.static('public'))
     app.use(bodyParser.json())
     
-    /*Add new entry to database*/
+
+    /*Display home screen - WORKING*/ 
+    app.get('/', (req, res) => {
+      devicesCollection.find().toArray()
+        .then(results => {
+          res.render('index.ejs')
+        })
+        .catch(error => console.error(error))
+      })
+
+    /*Add new entry to database - WORKING*/
     app.post('/devices', (req, res) => {
         devicesCollection.insertOne(req.body)
           .then(result => {
@@ -35,58 +42,61 @@ MongoClient.connect(url, { useUnifiedTopology: true })
           .catch(error => console.error(error))
     })
 
-    /*Display all database entries*/
-    app.get('/', (req, res) => {
+    /*Display all database entries - WORKING*/
+    app.get('/deviceList.ejs', (req, res) => {
       devicesCollection.find().toArray()
         .then(results => {
-          res.render('index.ejs', { devices: results })
+          res.render('deviceList.ejs', { devices: results })
         })
         .catch(error => console.error(error))
       })
 
-      /*app.get('/', (req, res) => {
-        devicesCollection.find({name:"Mickey Mouse"}).toArray() 
+      /*app.get('/search', (req, res) => {
+        devicesCollection.find({name: req.name}).toArray() 
           .then(results => {
-            res.render('index.ejs', { devices: results })
+            res.render('search.ejs', { devices: results })
           })
           .catch(error => console.error(error))
         })*/
 
     
-         /*Replace an entry with a new one*/  
-        app.put('/quotes', (req, res) => {
-        devicesCollection.findOneAndUpdate
-        (
-          { name: 'Yoda' },
-        {
-          $set: {
-            name: req.body.name,
-            quote: req.body.quote,
+         /*Replace an entry with a new one - WORKING*/  
+        app.put('/update', (req, res) => {
+          const { assetTag, name, organisation, lineManager, dateRequired } = req.body;
+          devicesCollection.findOneAndUpdate(
+          { assetTag: assetTag},// Filter the document to update based on the name field
+          { 
+            $set: {
+              name: name, 
+              organisation: organisation,
+              lineManager: lineManager,
+              dateRequired: dateRequired
+           } // Updates the fields with the new values
           },
-        },
-        {
-          upsert: true,
-        }
-      )
-          .then(result => {
+          { upsert: true } // Create a new document if the filter does not match any existing document
+        )
+         .then(result => {
           res.json('Success')
            })
-          .catch(error => console.error(error))
+           .catch(error => console.error(error))
       })
 
-      /*Delete an entry*/
-      app.delete('/quotes', (req, res) => {
+      /*Delete an entry - WORKING*/
+      app.delete('/devices', (req, res) => {
+        const { assetTag } = req.body;
         devicesCollection
-          .deleteOne({ name: req.body.name })
+          .deleteOne({"assetTag": assetTag})
           .then(result => {
             if (result.deletedCount === 0) {
-              return res.json('No quote to delete')
+              console.log(req.body)
+              return res.json('Nothing to delete')
             }
-            res.json(`Deleted Darth Vader's quote`)
+            res.json('Deleted')
             })
           .catch(error => console.error(error))
-      })
+          })
 
+      
 
 
   })
@@ -98,6 +108,5 @@ MongoClient.connect(url, { useUnifiedTopology: true })
 
 
 
-//app.get('/', (req, res) => {  res.sendFile(__dirname + '/index.html')  })// - no longer required after ejs view added//
 
 //https://zellwk.com/blog/crud-express-mongodb/ npm run dev//
