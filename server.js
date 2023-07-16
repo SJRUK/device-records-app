@@ -1,3 +1,5 @@
+//Server-side code//
+
 const express = require('express');
 const app = express();
 const bodyParser= require('body-parser');
@@ -51,13 +53,39 @@ MongoClient.connect(url, { useUnifiedTopology: true })
         .catch(error => console.error(error))
       })
 
+
+      /*Display search page - WORKING */
+    app.get('/search.ejs', (req, res) => {
+      devicesCollection.find().toArray()
+        .then(results => {
+          res.render('search.ejs', { devices: results })
+        })
+        .catch(error => console.error(error))
+      }) 
+
+
       /*app.get('/search', (req, res) => {
         devicesCollection.find({name: req.name}).toArray() 
           .then(results => {
             res.render('search.ejs', { devices: results })
           })
           .catch(error => console.error(error))
-        })*/
+        })
+
+        /*Search function - WORKING*/
+        app.post('/search', (req, res) => {
+        const { assetTag } = req.body;
+        devicesCollection
+          .find({"assetTag": assetTag})
+          .toArray()
+           .then(results => {
+            console.log(results)
+            res.json(results);
+                      })
+          .catch(error => console.error(error))
+          });
+        
+        
 
     
          /*Replace an entry with a new one - WORKING*/  

@@ -1,26 +1,10 @@
-// main.js
+// main.js - Client-side code //
 const update = document.querySelector('#update-button')
 
-/*update.addEventListener('click', _ => {
-    fetch('/devices', {
-      method: 'put',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: nameInput,
-        organisation: 'TEST',
-      }),
-    })
-    .then(res => {
-        if (res.ok) return res.json()
-      })
-      .then(response => {
-        console.log(response)
-        window.location.reload(true)
-      })
-  })*/
 
-const deleteButton = document.querySelector('#delete-button')
 
+/*Delete Device - WORKING but need to edit and display message*/
+  const deleteButton = document.querySelector('#delete-button')
 
 deleteButton.addEventListener('click', _ => {
 
@@ -49,7 +33,7 @@ deleteButton.addEventListener('click', _ => {
 })
 
 
-/* Update existing devices */
+/* Update existing devices - WORKING*/
 const updateForm = document.getElementById('updateForm');
 
 updateForm.addEventListener('submit', event => {
@@ -67,9 +51,6 @@ updateForm.addEventListener('submit', event => {
   const dateInput = document.getElementById('dateInput');
   const dateValue = dateInput.value;
   
-
-
-
   // Perform the update operation using the obtained name value //
   fetch('/update', {
     method: 'PUT',
@@ -91,4 +72,56 @@ updateForm.addEventListener('submit', event => {
     })
     .catch(error => console.error(error));
 });
+
+
+/*Search the database and get results - WORKING*/
+const searchButton = document.querySelector('#search-button')
+
+searchButton.addEventListener('click', _ => {
+
+  const searchInput = document.getElementById('searchInput');
+  const searchValue = searchInput.value;
+
+fetch('/search', {
+  method: 'post',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    assetTag: searchValue,
+  }),
+})
+  .then(res => {
+    if (res.ok) return res.json();
+  })
+  .then(response => {
+    console.log(response);
+    const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = '';
+
+    if (response.length === 0) {
+      resultsContainer.innerHTML = '<p>No results found.</p>';
+    } else {
+      response.forEach(device => {
+        const deviceElement = document.createElement('div');
+        const nameElement = document.createElement('h3');
+        const organisationElement = document.createElement('p');
+
+        nameElement.textContent = device.name;
+        organisationElement.textContent = device.organisation;
+
+        deviceElement.appendChild(nameElement);
+        deviceElement.appendChild(organisationElement);
+
+        resultsContainer.appendChild(deviceElement);
+      });
+    }
+  })
+  .catch(error => console.error(error));
+});
+
+    /*
+    //console.log(response);//
+    window.location.reload();
+  })
+  .catch(error => console.error(error));
+});*/
 
