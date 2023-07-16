@@ -8,6 +8,7 @@
         <button onclick="document.location='/deviceList.ejs'">View devices</button>
         <button onclick="document.location='/search.ejs'">Search devices</button>
         <button onclick="document.location='/deviceList.ejs'">Add devices</button>
+        <button onclick="document.location='/delete.ejs'">Delete devices</button>
 
         <h2>Add device</h2>
         <form action="/devices" method="POST">  
@@ -20,28 +21,7 @@
             <button type="submit">Submit</button>
         </form>
         
-        <div>
-          <h2>Search Devices</h2>
-          <p>Search the database using the Asset Number</p>
-          <input type="text" placeholder="Asset Number" id="searchInput">  
-          <button id="search-button">Search</button>
-            
-        </div>
-    
-        <div id="resultsContainer">     </div>  
 
- 
-      
-
-
-    <div>
-      <h2>Remove Device</h2>
-      <p>
-      Delete a database entry
-      </p>
-      <input type="text" placeholder="Asset Number" id="deleteInput">  
-      <button id="delete-button">Delete</button>
-    </div>
 
   <div id="message"></div>
 

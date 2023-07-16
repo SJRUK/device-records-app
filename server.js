@@ -58,19 +58,22 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     app.get('/search.ejs', (req, res) => {
       devicesCollection.find().toArray()
         .then(results => {
-          res.render('search.ejs', { devices: results })
+          res.render('search.ejs')
+        })
+        .catch(error => console.error(error))
+      }) 
+
+           /*Display Delete page - WORKING */
+    app.get('/delete.ejs', (req, res) => {
+      devicesCollection.find().toArray()
+        .then(results => {
+          res.render('delete.ejs')
         })
         .catch(error => console.error(error))
       }) 
 
 
-      /*app.get('/search', (req, res) => {
-        devicesCollection.find({name: req.name}).toArray() 
-          .then(results => {
-            res.render('search.ejs', { devices: results })
-          })
-          .catch(error => console.error(error))
-        })
+
 
         /*Search function - WORKING*/
         app.post('/search', (req, res) => {
@@ -110,7 +113,7 @@ MongoClient.connect(url, { useUnifiedTopology: true })
       })
 
       /*Delete an entry - WORKING*/
-      app.delete('/devices', (req, res) => {
+      app.delete('/delete', (req, res) => {
         const { assetTag } = req.body;
         devicesCollection
           .deleteOne({"assetTag": assetTag})
