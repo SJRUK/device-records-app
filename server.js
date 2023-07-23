@@ -1,9 +1,18 @@
 //Server-side code//
 
 const express = require('express');
-const app = express();
+const session = require('express-session'); // express-sessions
+const { v4: uuidv4 } = require('uuid'); // uuid, To call: uuidv4();
 const bodyParser= require('body-parser');
+const passport = require('passport');  // authentication
+const connectEnsureLogin = require('connect-ensure-login');// authorization
+const User = require('./user.js'); // User Model
 const MongoClient = require('mongodb').MongoClient;
+const app = express();
+
+
+// Include Express Validator Functions
+const { check, validationResult } = require('express-validator');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -23,16 +32,104 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     app.set('view engine', 'ejs')
     app.use(express.static('public'))
     app.use(bodyParser.json())
-    
+  
 
-    /*Display home screen - WORKING*/ 
-    app.get('/', (req, res) => {
+    // Configure Sessions Middleware
+    app.use(session({
+      genid: function (req) {
+        return uuidv4();
+      },
+      secret: 'r8q,+&1LM3)CD*zAGpx1xm{NeQhc;#',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { maxAge: 60 * 60 * 1000 } // 1 hour
+    }));
+
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    // Passport Local Strategy
+    passport.use(User.createStrategy());
+
+    // To use with sessions
+    passport.serializeUser(User.serializeUser());
+    passport.deserializeUser(User.deserializeUser());
+    
+    /*Display Add screen - WORKING*/ 
+    app.get('/add.ejs', (req, res) => {
       devicesCollection.find().toArray()
         .then(results => {
-          res.render('index.ejs')
+          res.render('add.ejs')
         })
         .catch(error => console.error(error))
       })
+
+      // Home Page Route
+      app.get('/home.ejs', (req, res) => {
+      res.send(req.sessionID);
+        });
+
+      /*Code for login function*/
+      // Route to Login Page
+app.get('/login.ejs', (req, res) => {
+  res.render('login.ejs');
+});
+
+// Route to Dashboard
+app.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+  res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
+  and your session expires in ${req.session.cookie.maxAge} 
+  milliseconds.<br><br>
+  <a href="/logout">Log Out</a><br><br><a href="/secret">Members Only</a>`);
+});
+
+// Route to Secret Page
+app.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+  res.render('secret-page.ejs');
+});
+
+// Route to Log out
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('login.ejs');
+});
+
+// Post Route: /login
+app.post('/login', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
+	console.log(req.user)
+	res.redirect('/dashboard');
+});
+
+
+
+
+
+
+/* Login Validation rules
+const loginValidate = [
+  // Check Username
+  check('username', 'Username Must Be an Email Address').isEmail()
+  .trim().escape().normalizeEmail(),
+  // Check Password
+  check('password').isLength({ min: 8 }).withMessage('Password Must Be at Least 8 Characters').matches('[0-9]').withMessage('Password Must Contain a Number').matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter').trim().escape()];
+
+  //Process User Input
+  app.post('/login', loginValidate, (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    else {
+   // Insert Login Code Here
+   req.session.username = req.body.username;
+   res.send(`Hello ${req.session.username}. Your session ID is   
+   ${req.sessionID} and your session expires in  
+   ${req.session.cookie.maxAge} milliseconds.`);
+    }
+  });*/
+
+
+
 
     /*Add new entry to database - WORKING*/
     app.post('/devices', (req, res) => {

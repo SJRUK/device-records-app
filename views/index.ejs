@@ -5,6 +5,9 @@
 
         <h1>Device Records Database</h1>
 
+
+        <button onclick="document.location='/login.ejs'">Login</button>
+
         <button onclick="document.location='/deviceList.ejs'">View devices</button>
         <button onclick="document.location='/search.ejs'">Search devices</button>
         <button onclick="document.location='/deviceList.ejs'">Add devices</button>
@@ -12,12 +15,12 @@
 
         <h2>Add device</h2>
         <form action="/devices" method="POST">  
-            <input type="text" placeholder="Asset number" name="assetTag">  
-            <input type="text" placeholder="Name" name="name">  
-            <input type="text" placeholder="Organisation" name="organisation">  
-            <input type="text" placeholder="Line manager" name="lineManager"> 
+            <input type="text" placeholder="Asset number" name="assetTag" required>  
+            <input type="text" placeholder="Name" name="name" required>  
+            <input type="text" placeholder="Organisation" name="organisation" required>  
+            <input type="text" placeholder="Line manager" name="lineManager" required> 
             <label for="Date required">Date required: </label>
-            <input type="date" name="dateRequired"> 
+            <input type="date" name="dateRequired" required> 
             <button type="submit">Submit</button>
         </form>
         
