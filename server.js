@@ -71,16 +71,21 @@ MongoClient.connect(url, { useUnifiedTopology: true })
 
       /*Code for login function*/
       // Route to Login Page
-app.get('/login.ejs', (req, res) => {
-  res.render('login.ejs');
-});
+    app.get('/', (req, res) => {
+     res.render('login.ejs');
+    });
 
 // Route to Dashboard
 app.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
   res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
   and your session expires in ${req.session.cookie.maxAge} 
   milliseconds.<br><br>
-  <a href="/logout">Log Out</a><br><br><a href="/secret">Members Only</a>`);
+  <a href="/logout">Log Out</a><br><br><a href="/home">Proceed to Device Records</a>`);
+});
+
+// Route to Home Page
+app.get('/home', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+  res.render('index.ejs');
 });
 
 // Route to Secret Page
@@ -89,9 +94,11 @@ app.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
 });
 
 // Route to Log out
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('login.ejs');
+app.get('/logout', function(req, res, next) {
+  req.logout(function(err) {
+  if (err) { return next(err); }
+  res.redirect('/');
+});
 });
 
 // Post Route: /login
