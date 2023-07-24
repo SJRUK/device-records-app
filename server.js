@@ -80,7 +80,7 @@ app.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
   res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
   and your session expires in ${req.session.cookie.maxAge} 
   milliseconds.<br><br>
-  <a href="/logout">Log Out</a><br><br><a href="/home">Proceed to Device Records</a>`);
+  <a href="/logout">Sign Out</a><br><br><a href="/home">Proceed to Device Records</a>`);
 });
 
 // Route to Home Page
@@ -97,7 +97,7 @@ app.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
 app.get('/logout', function(req, res, next) {
   req.logout(function(err) {
   if (err) { return next(err); }
-  res.redirect('/');
+  res.render('logout.ejs');
 });
 });
 
@@ -142,7 +142,7 @@ const loginValidate = [
     app.post('/devices', (req, res) => {
         devicesCollection.insertOne(req.body)
           .then(result => {
-            res.redirect('/')
+            res.render('index.ejs')
             console.log(req.body)
           })
           .catch(error => console.error(error))
