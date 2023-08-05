@@ -1,44 +1,17 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
     <head>  <meta charset="UTF-8">  
+        <link rel="stylesheet" href="/stylesheets/style.css">
     <title>TM470 - Device Records App</title></head>
-    <body>   
-
-        <h1>Device Records Database</h1>
-
-        <button onclick="document.location='/deviceList.ejs'">View devices</button>
-        <button onclick="document.location='/search.ejs'">Search devices</button>
-        <button onclick="document.location='/deviceList.ejs'">Add devices</button>
-        <button onclick="document.location='/delete.ejs'">Delete devices</button>
-
-        <button onclick="document.location='/logout'">Log Out</button>
-
-        <h2>Add device</h2>
-        <form action="/devices" method="POST">  
-            <input type="text" placeholder="Asset number" name="assetTag" required>  
-            <input type="text" placeholder="Name" name="name" required>  
-            <input type="text" placeholder="Organisation" name="organisation" required>  
-            <input type="text" placeholder="Line manager" name="lineManager" required> 
-            <label for="Date required">Date required: </label>
-            <input type="date" name="dateRequired" required> 
-            <button type="submit">Submit</button>
-        </form>
+   
         
-
-
-  <div id="message"></div>
-
-  
-  <h2>Update existing entry</h2>
-  <form id="updateForm">
-    <input type="text" id="assetInput" placeholder="Asset Number">  
-    <input type="text" id="nameInput" placeholder="Enter name">
-    <input type="text" id="organisationInput" placeholder="Organisation">  
-    <input type="text" id="lineManagerInput" placeholder="Line manager" > 
-    <label for="Date required">Date required: </label>
-    <input type="date" id="dateInput"> 
-        <button type="submit" id="submitButton">Submit</button>
-  </form>
-  
+    <body>   
+        
+        <h1>Device Records Database</h1>
+        <div class="indexListContainer">
+        <button onclick="document.location='/deviceList.ejs'">View devices</button>
+        <button onclick="document.location='/logout'">Log Out</button>
+        </div>    
     </body>
 
 

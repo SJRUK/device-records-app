@@ -8,6 +8,7 @@ const passport = require('passport');  // authentication
 const connectEnsureLogin = require('connect-ensure-login');// authorization
 const User = require('./user.js'); // User Model
 const MongoClient = require('mongodb').MongoClient;
+const path = require('path');
 const app = express();
 
 
@@ -80,18 +81,14 @@ app.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
   res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
   and your session expires in ${req.session.cookie.maxAge} 
   milliseconds.<br><br>
-  <a href="/logout">Sign Out</a><br><br><a href="/home">Proceed to Device Records</a>`);
+  <a href="/logout">Sign Out</a><br><br><a href="/index.ejs">Proceed to Device Records</a>`);
 });
 
 // Route to Home Page
-app.get('/home', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+app.get('/index.ejs', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
   res.render('index.ejs');
 });
 
-// Route to Secret Page
-app.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-  res.render('secret-page.ejs');
-});
 
 // Route to Log out
 app.get('/logout', function(req, res, next) {
@@ -142,7 +139,7 @@ const loginValidate = [
     app.post('/devices', (req, res) => {
         devicesCollection.insertOne(req.body)
           .then(result => {
-            res.render('index.ejs')
+            res.render('add.ejs')
             console.log(req.body)
           })
           .catch(error => console.error(error))
@@ -167,7 +164,16 @@ const loginValidate = [
         .catch(error => console.error(error))
       }) 
 
-           /*Display Delete page - WORKING */
+      /* Display Add page - WORKING*/
+      app.get('/add.ejs', (req, res) => {
+        devicesCollection.find().toArray()
+          .then(results => {
+            res.render('add.ejs')
+          })
+          .catch(error => console.error(error))
+        }) 
+
+        /*Display Delete page - WORKING */
     app.get('/delete.ejs', (req, res) => {
       devicesCollection.find().toArray()
         .then(results => {
@@ -175,6 +181,16 @@ const loginValidate = [
         })
         .catch(error => console.error(error))
       }) 
+
+       /*Display Update page - WORKING */
+    app.get('/update.ejs', (req, res) => {
+      devicesCollection.find().toArray()
+        .then(results => {
+          res.render('update.ejs')
+        })
+        .catch(error => console.error(error))
+      }) 
+
 
 
 

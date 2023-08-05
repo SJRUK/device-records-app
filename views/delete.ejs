@@ -1,14 +1,20 @@
+<!DOCTYPE html><html lang="en">
+    <head>  <meta charset="UTF-8">  
+    <title>TM470 - Device Records App</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    </head>
+
 <h1>Delete From Database</h1>
 
-<div>
+<div class="deleteContainer">
     <h2>Remove Device</h2>
-    <p>
-    Delete a database entry
-    </p>
     <input type="text" placeholder="Asset Number" id="deleteInput">  
     <button id="delete-button">Delete</button>
-  </div>
+    </div>
 
+  <button onclick="document.location='/deviceList.ejs'">Back to device list</button>
+  
+  <div id="messageDiv"></div>
 
 <script>
 /*Delete Device - WORKING but need to edit and display message*/
@@ -30,11 +36,12 @@ deleteButton.addEventListener('click', _ => {
       if (res.ok) return res.json()
     })
     .then(response => {
-        if (response === 'No quote to delete') {
-          messageDiv.textContent = 'No Darth Vader quote to delete'
+        if (response === 'Nothing to delete') {
+          messageDiv.textContent = 'Device does not exist in the database - nothing to delete';
         } 
         else {
-          window.location.reload(true)
+          messageDiv.textContent = 'Device deleted';
+          setTimeout(() => {  window.location.reload(true); }, 5000); //Page refreshes after 5 seconds
           }
       })
     .catch(console.error)

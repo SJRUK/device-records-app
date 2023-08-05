@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en">
+    <head>  <meta charset="UTF-8">  
+    <title>TM470 - Device Records App</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    </head>
+  
+  <h2>Update existing entry</h2>
+  <form id="updateForm">
+    <input type="text" id="assetInput" placeholder="Asset Number">  
+    <input type="text" id="nameInput" placeholder="Enter name">
+    <input type="text" id="organisationInput" placeholder="Organisation">  
+    <input type="text" id="lineManagerInput" placeholder="Line manager" > 
+    <label for="Date required">Date required: </label>
+    <input type="date" id="dateInput"> 
+        <button type="submit" id="submitButton">Submit</button>
+  </form>
+
+  <button onclick="document.location='/deviceList.ejs'">Back to device list</button>
+  </html>

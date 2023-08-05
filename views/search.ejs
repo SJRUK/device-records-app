@@ -1,15 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>Search Database</title>
+</head>
+
+<body>
+
 <h1>Search Database</h1>
 
-    <div>
+    <div class="searchContainer">
       <h2>Search Devices</h2>
       <p>Search the database using the Asset Number</p>
       <input type="text" placeholder="Asset Number" id="searchInput">  
       <button id="search-button">Search</button>
+      <button onclick="document.location='/deviceList.ejs'">Back to device list</button>
         
     </div>
 
-    <div id="resultsContainer">     </div>  
+    <div id="resultsContainer"> </div>
 
+  
     
 <script>
 
@@ -39,16 +51,28 @@
     if (response.length === 0) {
       resultsContainer.innerHTML = '<p>No results found.</p>';
     } else {
+      resultsContainer.innerHTML = '<h3>Search results</h3>';
       response.forEach(device => {
         const deviceElement = document.createElement('div');
-        const nameElement = document.createElement('h3');
+        deviceElement.classList.add('deviceElement');
+
+        const assetTagElement = document.createElement('p');
+        const nameElement = document.createElement('p');
         const organisationElement = document.createElement('p');
+        const lineManagerElement = document.createElement('p');
+        const dateRequiredElement = document.createElement('p');
 
-        nameElement.textContent = device.name;
-        organisationElement.textContent = device.organisation;
+        assetTagElement.textContent = "Asset Tag: " + device.assetTag;
+        nameElement.textContent = "Name: " + device.name;
+        organisationElement.textContent = "Organisation: " + device.organisation;
+        lineManagerElement.textContent = "Line Manager: " + device.lineManager;
+        dateRequiredElement.textContent = "Date Required: " + device.dateRequired;
 
+        deviceElement.appendChild(assetTagElement);
         deviceElement.appendChild(nameElement);
         deviceElement.appendChild(organisationElement);
+        deviceElement.appendChild(lineManagerElement);
+        deviceElement.appendChild(dateRequiredElement);
 
         resultsContainer.appendChild(deviceElement);
       });
@@ -58,3 +82,6 @@
 });
 
      </script>
+
+</body>
+</html>

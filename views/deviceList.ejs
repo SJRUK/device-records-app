@@ -1,7 +1,10 @@
 <!DOCTYPE html><html lang="en">
     <head>  <meta charset="UTF-8">  
-    <title>TM470 - Device Records App</title></head>
-    
+    <title>TM470 - Device Records App</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    </head>
+
+    <body>
     <h2>Devices currently held in safe</h2>
 
         <ul class="devices">
@@ -21,3 +24,13 @@
           </li>
           <% } %>
         </ul>
+
+        <div class="deviceListContainer">
+        <button onclick="document.location='/add.ejs'">Add devices</button>
+        <button onclick="document.location='/delete.ejs'">Delete devices</button>
+        <button onclick="document.location='/search.ejs'">Search devices</button>
+        <button onclick="document.location='/update.ejs'">Update devices</button>
+        </div>
+        <button onclick="document.location='/logout'">Log Out</button>
+      </body>
+      </html>
