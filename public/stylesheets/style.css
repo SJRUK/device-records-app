@@ -27,6 +27,7 @@ body {
   padding-left: 100px; 
   padding-right: 100px;
   border-radius: 100px;
+  background-color: #dad7d7;
  }
 
 .heading, .loginForm {

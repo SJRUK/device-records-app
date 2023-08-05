@@ -3,7 +3,7 @@
     <title>TM470 - Device Records App</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
-  
+  <body>
   <h2>Update existing entry</h2>
   <form id="updateForm">
     <input type="text" id="assetInput" placeholder="Asset Number">  
@@ -14,6 +14,56 @@
     <input type="date" id="dateInput"> 
         <button type="submit" id="submitButton">Submit</button>
   </form>
-
+  
   <button onclick="document.location='/deviceList.ejs'">Back to device list</button>
+
+  <script>
+
+const update = document.querySelector('#update-button')
+
+
+/* Update existing devices - WORKING*/
+const updateForm = document.getElementById('updateForm');
+
+updateForm.addEventListener('submit', event => {
+  event.preventDefault(); // Prevent the default form submission behavior //
+
+  // Retrieve the input values //
+  const nameInput = document.getElementById('nameInput');
+  const nameValue = nameInput.value;
+  const assetInput = document.getElementById('assetInput');
+  const assetValue = assetInput.value;
+  const organisationInput = document.getElementById('organisationInput');
+  const organisationValue = organisationInput.value;
+  const lineManagerInput = document.getElementById('lineManagerInput');
+  const lineManagerValue = lineManagerInput.value;
+  const dateInput = document.getElementById('dateInput');
+  const dateValue = dateInput.value;
+  
+  // Perform the update operation using the obtained name value //
+  fetch('/update', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      assetTag: assetValue,
+      name: nameValue,
+      organisation: organisationValue,
+      lineManager: lineManagerValue,
+      dateRequired: dateValue
+    }),
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+    })
+    .then(response => {
+      console.log(response);
+      setTimeout(() => {  window.location.reload(true); }, 5000); //Page refreshes after 5 seconds
+      window.location.href = '/deviceList.ejs';
+    })
+    .catch(error => console.error(error));
+});
+  </script>
+
+  </body>
+  
   </html>

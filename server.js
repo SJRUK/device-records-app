@@ -227,10 +227,10 @@ const loginValidate = [
           { upsert: true } // Create a new document if the filter does not match any existing document
         )
          .then(result => {
-          res.json('Success')
-           })
+          res.json('Success');
+          })
            .catch(error => console.error(error))
-      })
+           });
 
       /*Delete an entry - WORKING*/
       app.delete('/delete', (req, res) => {

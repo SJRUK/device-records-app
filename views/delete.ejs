@@ -17,7 +17,7 @@
   <div id="messageDiv"></div>
 
 <script>
-/*Delete Device - WORKING but need to edit and display message*/
+/*Delete Device - WORKING*/
   const deleteButton = document.querySelector('#delete-button')
 
 deleteButton.addEventListener('click', _ => {
@@ -41,7 +41,6 @@ deleteButton.addEventListener('click', _ => {
         } 
         else {
           messageDiv.textContent = 'Device deleted';
-          setTimeout(() => {  window.location.reload(true); }, 5000); //Page refreshes after 5 seconds
           }
       })
     .catch(console.error)
