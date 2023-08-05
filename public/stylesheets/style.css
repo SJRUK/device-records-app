@@ -84,6 +84,11 @@ button {
   margin: 5px;
 }
 
+Button:hover {
+  opacity: 0.8;
+}
+
+
 .indexListContainer {
   display: flex;
   justify-content: center;
@@ -107,4 +112,10 @@ button {
   flex-direction: column;
   align-items: center;
 
+}
+
+#updateForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
