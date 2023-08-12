@@ -41,6 +41,7 @@ deleteButton.addEventListener('click', _ => {
         } 
         else {
           messageDiv.textContent = 'Device deleted';
+          setTimeout(() => {  window.location.reload(true); }, 5000); //Page refreshes after 5 seconds
           }
       })
     .catch(console.error)

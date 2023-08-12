@@ -7,23 +7,31 @@
     <body>
     <h2>Devices currently held in safe</h2>
 
-        <ul class="devices">
-        <!-- Loop through devices -->
-        <% for(let i = 0; i < devices.length; i++) {%>
-        <li class="device">
+      <table id="deviceTable">
+        <tr>
+          <tr>
+            <th>Asset Number</th>
+            <th>Name</th>
+            <th>Organisation</th>
+            <th>Line Manager</th>
+            <th>Date Required</th>
+          </tr>
+           <!-- Loop through devices -->
+           <% for (let i = 0; i < devices.length; i++) {%>
+          <tr>
           <!-- Output assetTag from the iterated device object -->
-          <span><%= devices[i].assetTag %></span>:
+          <td><%= devices[i].assetTag %></td>
           <!-- Output name from the iterated device object -->
-          <span><%= devices[i].name %></span>:
+          <td><%= devices[i].name %></td>
           <!-- Output organisation from the iterated device object -->
-          <span><%= devices[i].organisation %></span>:
+          <td><%= devices[i].organisation %></td>
           <!-- Output line manager from the iterated device object -->
-          <span><%= devices[i].lineManager %></span>:
+          <td><%= devices[i].lineManager %></td>
           <!-- Output date from the iterated device object -->
-          <span><%= devices[i].dateRequired %></span>
-          </li>
+          <td><%= devices[i].dateRequired %></td>
           <% } %>
-        </ul>
+        </tr>
+      </table>  
 
         <div class="deviceListContainer">
         <button onclick="document.location='/add.ejs'">Add devices</button>

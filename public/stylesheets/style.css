@@ -120,3 +120,16 @@ Button:hover {
   flex-direction: column;
   align-items: center;
 }
+
+#deviceTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #686969;
+  color: white;
+}
+
+#deviceTable td, #deviceTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

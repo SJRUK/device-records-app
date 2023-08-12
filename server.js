@@ -173,7 +173,7 @@ const loginValidate = [
           .catch(error => console.error(error))
         }) 
 
-        /*Display Delete page - WORKING */
+      /*Display Delete page - WORKING */
     app.get('/delete.ejs', (req, res) => {
       devicesCollection.find().toArray()
         .then(results => {
