@@ -105,37 +105,7 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/' }),  fu
 });
 
 
-
-
-
-
-/* Login Validation rules
-const loginValidate = [
-  // Check Username
-  check('username', 'Username Must Be an Email Address').isEmail()
-  .trim().escape().normalizeEmail(),
-  // Check Password
-  check('password').isLength({ min: 8 }).withMessage('Password Must Be at Least 8 Characters').matches('[0-9]').withMessage('Password Must Contain a Number').matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter').trim().escape()];
-
-  //Process User Input
-  app.post('/login', loginValidate, (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-    else {
-   // Insert Login Code Here
-   req.session.username = req.body.username;
-   res.send(`Hello ${req.session.username}. Your session ID is   
-   ${req.sessionID} and your session expires in  
-   ${req.session.cookie.maxAge} milliseconds.`);
-    }
-  });*/
-
-
-
-
-    /*Add new entry to database - WORKING*/
+   /*Add new entry to database - WORKING*/
     app.post('/devices', (req, res) => {
         devicesCollection.insertOne(req.body)
           .then(result => {
@@ -254,10 +224,3 @@ const loginValidate = [
   
 .catch(error => console.error(error))
 
-
-
-
-
-
-
-//https://zellwk.com/blog/crud-express-mongodb/ npm run dev//
