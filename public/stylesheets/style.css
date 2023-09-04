@@ -15,7 +15,6 @@ body {
   background-image: linear-gradient(rgb(230, 230, 255),rgb(99, 99, 119));
 }
 
-
 .loginContainer {
   display: flex;
   flex-direction: column;
@@ -34,7 +33,6 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  
 }
 
 input[type=text] {
@@ -58,7 +56,6 @@ input[type=date] {
 
 input[type=text, type=password]:focus {
   border: 3px solid #555;
-  
 }
 
 #loginButton {
